@@ -4,7 +4,6 @@ const page = () => {
   return (
     <>
       <h1>Events</h1>
-      <UserButton />
     </>
   );
 };
