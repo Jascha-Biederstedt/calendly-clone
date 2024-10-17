@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { Button } from '../ui/button';
 
 import { eventFormSchema } from '@/schema/events';
+import { Textarea } from '../ui/textarea';
 
 const EventForm = () => {
   const form = useForm<z.infer<typeof eventFormSchema>>({
@@ -63,6 +64,22 @@ const EventForm = () => {
                 <Input type='number' {...field} />
               </FormControl>
               <FormDescription>In minutes</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='description'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea className='resize-none h-32' {...field} />
+              </FormControl>
+              <FormDescription>
+                Optional description of the event
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
