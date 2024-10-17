@@ -12,6 +12,7 @@ import {
   FormField,
   FormMessage,
 } from '../ui/form';
+import { Switch } from '../ui/switch';
 import { Input } from '../ui/input';
 import Link from 'next/link';
 import { Button } from '../ui/button';
@@ -79,6 +80,27 @@ const EventForm = () => {
               </FormControl>
               <FormDescription>
                 Optional description of the event
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='isActive'
+          render={({ field }) => (
+            <FormItem>
+              <div className='flex items-center gap-2'>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel>Active</FormLabel>
+              </div>
+              <FormDescription>
+                Inactive events will not be visible for users to book
               </FormDescription>
               <FormMessage />
             </FormItem>
