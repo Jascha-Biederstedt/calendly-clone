@@ -53,6 +53,20 @@ const EventForm = () => {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name='durationInMinutes'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Duration</FormLabel>
+              <FormControl>
+                <Input type='number' {...field} />
+              </FormControl>
+              <FormDescription>In minutes</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className='flex gap-2 justify-end'>
           <Button type='button' asChild variant='outline'>
             <Link href='/events'>Cancel</Link>
