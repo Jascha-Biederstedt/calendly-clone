@@ -10,7 +10,7 @@ import { EventTable } from '@/drizzle/schema';
 
 export const createEvent = async (
   unsafeData: z.infer<typeof eventFormSchema>
-) => {
+): Promise<{ error: boolean | undefined }> => {
   const { userId } = auth();
   const { success, data } = eventFormSchema.safeParse(unsafeData);
 
