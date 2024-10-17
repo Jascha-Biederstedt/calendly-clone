@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { db } from '@/drizzle/db';
 import { auth } from '@clerk/nextjs/server';
+import EventCard from '@/components/cards/EventCard';
 
 const EventsPage = async () => {
   const { userId, redirectToSignIn } = auth();
@@ -27,7 +28,11 @@ const EventsPage = async () => {
         </Button>
       </div>
       {events.length > 0 ? (
-        <h1>Events</h1>
+        <div className='grid gap-4 grid-cols-[repeat(auto-fill,minmax(400px, 1fr))]'>
+          {events.map(event => (
+            <EventCard key={event.id} {...event} />
+          ))}
+        </div>
       ) : (
         <div className='flex flex-col items-center gap-4'>
           <CalendarRange className='size-16 mx-auto' /> You do not have any
