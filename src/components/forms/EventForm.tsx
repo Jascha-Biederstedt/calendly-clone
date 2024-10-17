@@ -19,6 +19,7 @@ import { Button } from '../ui/button';
 
 import { eventFormSchema } from '@/schema/events';
 import { Textarea } from '../ui/textarea';
+import { createEvent } from '@/server/actions/events';
 
 const EventForm = () => {
   const form = useForm<z.infer<typeof eventFormSchema>>({
@@ -29,8 +30,8 @@ const EventForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof eventFormSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof eventFormSchema>) => {
+    await createEvent(values);
   };
 
   return (
