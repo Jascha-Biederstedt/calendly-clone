@@ -19,7 +19,7 @@ import { Button } from '../ui/button';
 
 import { eventFormSchema } from '@/schema/events';
 import { Textarea } from '../ui/textarea';
-import { createEvent } from '@/server/actions/events';
+import { createEvent, updateEvent } from '@/server/actions/events';
 
 const EventForm = ({
   event,
@@ -41,7 +41,9 @@ const EventForm = ({
   });
 
   const onSubmit = async (values: z.infer<typeof eventFormSchema>) => {
-    const data = await createEvent(values);
+    const action =
+      event == null ? createEvent : updateEvent.bind(null, event.id);
+    const data = await action(values);
 
     if (data?.error) {
       form.setError('root', {
