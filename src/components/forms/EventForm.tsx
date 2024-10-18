@@ -12,14 +12,26 @@ import {
   FormField,
   FormMessage,
 } from '../ui/form';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTrigger,
+  AlertDialogTitle,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from '../ui/alert-dialog';
 import { Switch } from '../ui/switch';
 import { Input } from '../ui/input';
 import Link from 'next/link';
 import { Button } from '../ui/button';
+import { useTransition } from 'react';
 
 import { eventFormSchema } from '@/schema/events';
 import { Textarea } from '../ui/textarea';
-import { createEvent, updateEvent } from '@/server/actions/events';
+import { createEvent, updateEvent, deleteEvent } from '@/server/actions/events';
 
 const EventForm = ({
   event,
@@ -32,6 +44,7 @@ const EventForm = ({
     isActive: boolean;
   };
 }) => {
+  const [isDeletePending, startDeleteTransition] = useTransition();
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: event ?? {
@@ -131,6 +144,47 @@ const EventForm = ({
           )}
         />
         <div className='flex gap-2 justify-end'>
+          {event && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant='destructiveGhost'
+                  disabled={isDeletePending || form.formState.isSubmitting}
+                >
+                  Delete
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    this event.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    disabled={isDeletePending || form.formState.isSubmitting}
+                    variant='destructive'
+                    onClick={() => {
+                      startDeleteTransition(async () => {
+                        const data = await deleteEvent(event.id);
+
+                        if (data?.error) {
+                          form.setError('root', {
+                            message: 'There was an error deleting this event',
+                          });
+                        }
+                      });
+                    }}
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
           <Button type='button' asChild variant='outline'>
             <Link href='/events'>Cancel</Link>
           </Button>

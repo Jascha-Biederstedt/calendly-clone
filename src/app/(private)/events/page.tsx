@@ -5,6 +5,8 @@ import { db } from '@/drizzle/db';
 import { auth } from '@clerk/nextjs/server';
 import EventCard from '@/components/cards/EventCard';
 
+export const revalidate = 0;
+
 const EventsPage = async () => {
   const { userId, redirectToSignIn } = auth();
 
