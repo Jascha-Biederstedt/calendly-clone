@@ -21,10 +21,20 @@ import { eventFormSchema } from '@/schema/events';
 import { Textarea } from '../ui/textarea';
 import { createEvent } from '@/server/actions/events';
 
-const EventForm = () => {
+const EventForm = ({
+  event,
+}: {
+  event?: {
+    id: string;
+    name: string;
+    description?: string;
+    durationInMinutes: number;
+    isActive: boolean;
+  };
+}) => {
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
-    defaultValues: {
+    defaultValues: event ?? {
       isActive: true,
       durationInMinutes: 30,
     },
