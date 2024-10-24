@@ -1,3 +1,5 @@
+Built by watching the YouTube Video [Build a Full Stack Next.js App with Google Calendar - TypeScript, Drizzle, ShadCN, Tailwind, Neon](https://www.youtube.com/watch?v=0Oacr8VrnNk&t=8178s) by Web Dev Simplified.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
